@@ -12,8 +12,9 @@
     <div class="container">
         <h1>36OpenTalk</h1>
         <textarea id="messageText" rows="5" cols="50" placeholder="Введите ваше сообщение"></textarea><br>
+        <input type="file" id="imageFile" accept="image/*"><br>  <!-- Добавлено поле выбора файла -->
         <button onclick="sendMessage()">Отправить</button>
-        <button onclick="window.open('https://t.me/rodnaya36', '_blank')">Перейти в Telegram</button> <!-- Кнопка перехода на сторонний ресурс -->
+        <button onclick="window.open('https://t.me/rodnaya36', '_blank')">Перейти в Telegram</button>
         <div id="message"></div>
 
         <div class="contact-info">
@@ -25,29 +26,47 @@
 
     <script>
         const BOT_TOKEN = "8077294714:AAFtQ5NjN-PHvvn9tDRE4vHRk-RtmISWKFk";
-        const CHANNEL_ID = "@rodnaya36"; // ITS REAL LIFE!
-        const TELEGRAM_API_URL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+        const CHANNEL_ID = "@rodnaya36"; // Замените на ваш ID канала!
+        //const TELEGRAM_API_URL = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;  Удалите эту строку
 
         async function sendMessage() {
             const messageText = document.getElementById("messageText").value;
+            const imageFile = document.getElementById("imageFile").files[0]; // Получаем выбранный файл
             const messageDiv = document.getElementById("message");
 
+            if (!messageText && !imageFile) {
+                messageDiv.className = "error";
+                messageDiv.textContent = "Пожалуйста, введите сообщение или выберите изображение.";
+                return;
+            }
+
+            const formData = new FormData();  // Создаем объект FormData для отправки файлов
+
+            if (messageText) {
+                formData.append("caption", messageText); // Добавляем текст сообщения
+            }
+            if (imageFile) {
+                formData.append("photo", imageFile); // Добавляем файл изображения
+            }
+            formData.append("chat_id", CHANNEL_ID); // Добавляем ID чата
+            // Отправка изображения и текста.  Используется 'sendPhoto'
             try {
-                const response = await fetch(TELEGRAM_API_URL + `?chat_id=${CHANNEL_ID}&text=${encodeURIComponent(messageText)}`, {
+                const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
                     method: "POST",
+                    body: formData,
                 });
 
                 if (response.ok) {
                     messageDiv.className = "success";
-                    messageDiv.textContent = "Сообщение успешно отправлено!";
+                    messageDiv.textContent = "Сообщение и изображение успешно отправлены!";
                 } else {
                     messageDiv.className = "error";
-                    messageDiv.textContent = "Ошибка при отправке сообщения: " + response.statusText;
+                    messageDiv.textContent = "Ошибка при отправке: " + response.statusText;
                 }
 
             } catch (error) {
                 messageDiv.className = "error";
-                messageDiv.textContent = "Произошла ошибка при отправке запроса: " + error;
+                messageDiv.textContent = "Ошибка запроса: " + error;
             }
         }
 
