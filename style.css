@@ -1,0 +1,129 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f8f0; /* Светло-зеленый фон по умолчанию */
+}
+
+.container {
+    background-color: #ffffff; /* Белый контейнер по умолчанию */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 80%;
+    max-width: 600px;
+}
+
+h1 {
+    color: #2e7d32; /* Темно-зеленый заголовок по умолчанию */
+}
+
+textarea {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #c8e6c9; /* Светло-зеленая граница поля ввода по умолчанию */
+    border-radius: 4px;
+    resize: vertical;
+    width: 90%;
+}
+
+button {
+    background-color: #4caf50; /* Зеленая кнопка по умолчанию */
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px 0; /* Добавлено для отступа между кнопками */
+}
+
+button:hover {
+    background-color: #388e3c; /* Более темный зеленый при наведении по умолчанию */
+}
+
+#message {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.success {
+    background-color: #c8e6c9; /* Светло-зеленый успех по умолчанию */
+    color: #1b5e20;
+    border: 1px solid #a5d6a7;
+}
+
+.error {
+    background-color: #ffcdd2; /* Светло-красный ошибка по умолчанию */
+    color: #b71c1c;
+    border: 1px solid #ef9a9a;
+}
+
+.contact-info {
+    margin-top: 20px;
+    text-align: center; /* Добавлено для центрирования текста */
+}
+
+/* --- Стили темной темы --- */
+body.dark-theme {
+    background-color: #333; /* Темно-серый фон в темной теме */
+}
+
+body.dark-theme .container {
+    background-color: #444; /* Темно-серый контейнер в темной теме */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-theme h1 {
+    color: #8bc34a; /* Ярко-зеленый заголовок в темной теме */
+}
+
+body.dark-theme textarea {
+    border: 1px solid #66bb6a; /* Зеленая граница поля ввода в темной теме */
+    color: #fff;
+    background-color: #555;
+}
+
+body.dark-theme button {
+    background-color: #689f38; /* Темно-зеленая кнопка в темной теме */
+}
+
+body.dark-theme button:hover {
+    background-color: #33691e; /* Еще более темный зеленый при наведении в темной теме */
+}
+
+body.dark-theme .success {
+    background-color: #66bb6a; /* Зеленый успех в темной теме */
+    color: #1b5e20;
+    border: 1px solid #a5d6a7;
+}
+
+body.dark-theme .error {
+    background-color: #e57373; /* Светло-красный ошибка в темной теме */
+    color: #b71c1c;
+    border: 1px solid #ef9a9a;
+}
+
+/* --- Стили переключателя тем --- */
+.theme-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.theme-toggle button {
+    background-color: #8bc34a; /* Светло-зеленый переключатель темы */
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
