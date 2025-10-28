@@ -21,31 +21,38 @@ async function sendMessage() {
     }
 
     const formData = new FormData();
+    let apiUrl = `https://api.telegram.org/bot${getBotToken()}/`; // Базовый URL
 
-    if (messageText) {
-        formData.append("caption", messageText);
-    }
     if (imageFile) {
         formData.append("photo", imageFile);
+        if (messageText) {
+            formData.append("caption", messageText); // Добавляем текст только если есть изображение
+        }
+        formData.append("chat_id", getChannelId());
+        apiUrl += "sendPhoto"; // Если есть изображение, используем sendPhoto
+    } else {
+        // Если нет изображения, отправляем только текст
+        formData.append("chat_id", getChannelId());
+        formData.append("text", messageText);
+        apiUrl += "sendMessage"; // Если нет изображения, используем sendMessage
     }
-    formData.append("chat_id", getChannelId()); // Use getter function
 
     try {
-        const response = await fetch(`https://api.telegram.org/bot${getBotToken()}/sendPhoto`, { // Use getter function
+        const response = await fetch(apiUrl, {
             method: "POST",
             body: formData,
         });
 
         if (response.ok) {
             messageDiv.className = "success";
-            messageDiv.textContent = "Сообщение и изображение успешно отправлены!";
+            messageDiv.textContent = "Сообщение успешно отправлено!";
         } else {
             let errorText = "Ошибка при отправке: " + response.statusText;
 
             try {
-                const errorData = await response.json(); // Попытка распарсить JSON с информацией об ошибке
+                const errorData = await response.json();
                 if (errorData.description) {
-                    errorText += " - " + errorData.description; // Добавляем описание ошибки из JSON
+                    errorText += " - " + errorData.description;
                 }
                 if (errorData.error_code) {
                     errorText += " (Код ошибки: " + errorData.error_code + ")";
