@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,11 +11,27 @@
     </div>
 
     <div class="container">
-        <h1>36OpenTalk beta 1.2</h1>
+        <h1>36OpenTalk beta 1.3</h1>
         <textarea id="messageText" rows="5" cols="50" placeholder="Введите ваше сообщение"></textarea><br>
         <input type="file" id="imageFile" accept="image/*"><br>
         <button onclick="sendMessage()">Отправить</button>
         <button onclick="window.open('https://t.me/rodnaya36', '_blank')">Перейти в Telegram</button>
+        <!-- Новая кнопка для переключения видимости канала -->
+        <button id="toggleChannelBtn" onclick="toggleChannelView()">Показать канал</button>
+
+        <!-- Контейнер для iframe канала Telegram -->
+        <div id="telegram-channel-wrapper" class="telegram-channel-wrapper" style="display:none;">
+            <iframe id="telegram-channel-iframe"
+                    src="https://t.me/rodnaya36?embed=1" <!-- URL канала с параметром embed -->
+                    width="100%"
+                    height="400"
+                    frameborder="0"
+                    allowtransparency="true"
+                    scrolling="auto"
+                    loading="lazy"
+            ></iframe>
+        </div>
+
         <div id="message"></div>
 
         <div class="contact-info">

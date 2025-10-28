@@ -64,6 +64,20 @@ function toggleTheme() {
     applyTheme(newTheme);
 }
 
+// НОВАЯ ФУНКЦИЯ: Показать/скрыть канал Telegram
+function toggleChannelView() {
+    const channelWrapper = document.getElementById('telegram-channel-wrapper');
+    const toggleButton = document.getElementById('toggleChannelBtn');
+
+    if (channelWrapper.style.display === 'none' || channelWrapper.style.display === '') {
+        channelWrapper.style.display = 'block';
+        toggleButton.textContent = 'Скрыть канал';
+    } else {
+        channelWrapper.style.display = 'none';
+        toggleButton.textContent = 'Показать канал';
+    }
+}
+
 
 async function sendMessage() {
     const messageText = document.getElementById("messageText").value;
