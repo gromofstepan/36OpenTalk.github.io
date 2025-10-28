@@ -1,148 +1,235 @@
+ss
+/* Определяем переменные для светлой темы по умолчанию */
+:root {
+    --bg-color: #f0f2f5; /* Очень светлый серый */
+    --text-color: #333;
+    --container-bg: #ffffff;
+    --container-border: #e0e0e0;
+    --button-bg: #4a90e2; /* Мягкий синий */
+    --button-hover-bg: #357bd8;
+    --header-color: #2c3e50; /* Темно-серый заголовок */
+    --input-bg: #ffffff;
+    --input-border: #ccc;
+    --link-color: #4a90e2;
+
+    /* Цвета для сообщений */
+    --success-bg: #d4edda;
+    --success-text: #155724;
+    --success-border: #c3e6cb;
+    --error-bg: #f8d7da;
+    --error-text: #721c24;
+    --error-border: #f5c6cb;
+
+    /* Цвета для переключателя темы */
+    --toggle-button-bg: #6c757d; /* Серый */
+    --toggle-button-hover-bg: #5a6268;
+
+    /* Общие стили */
+    --border-radius-sm: 6px;
+    --border-radius-md: 10px;
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Переопределяем переменные для темной темы, если пользователь предпочитает темную схему */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #282c34; /* Темно-серый */
+        --text-color: #e0e0e0;
+        --container-bg: #3c4048;
+        --container-border: #555;
+        --button-bg: #61afef; /* Светло-голубой */
+        --button-hover-bg: #5196d4;
+        --header-color: #61afef;
+        --input-bg: #4d515a;
+        --input-border: #666;
+        --link-color: #61afef;
+
+        --success-bg: #386738;
+        --success-text: #c3e6cb;
+        --success-border: #218838;
+        --error-bg: #8c3838;
+        --error-text: #f5c6cb;
+        --error-border: #dc3545;
+
+        --toggle-button-bg: #adb5bd; /* Светло-серый */
+        --toggle-button-hover-bg: #9ea7ae;
+    }
+}
+
+/* Принудительная темная тема при наличии класса .dark-theme (для переключателя) */
+body.dark-theme {
+    --bg-color: #282c34;
+    --text-color: #e0e0e0;
+    --container-bg: #3c4048;
+    --container-border: #555;
+    --button-bg: #61afef;
+    --button-hover-bg: #5196d4;
+    --header-color: #61afef;
+    --input-bg: #4d515a;
+    --input-border: #666;
+    --link-color: #61afef;
+
+    --success-bg: #386738;
+    --success-text: #c3e6cb;
+    --success-border: #218838;
+    --error-bg: #8c3838;
+    --error-text: #f5c6cb;
+    --error-border: #dc3545;
+
+    --toggle-button-bg: #adb5bd;
+    --toggle-button-hover-bg: #9ea7ae;
+}
+
+
+/* Общие стили */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #E6E6E6; /* Светло-серый фон */
-    color: #333; /* Темно-серый текст */
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
-    background-color: #FFF; /* Белый контейнер */
-    border: 1px solid #CCC; /* Серая рамка */
-    border-radius: 5px;
-    padding: 20px;
-    width: 80%;
-    max-width: 600px;
+    background-color: var(--container-bg);
+    border: 1px solid var(--container-border);
+    border-radius: var(--border-radius-md);
+    padding: 30px;
+    box-shadow: var(--box-shadow);
     text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 600px;
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 h1 {
-    color: #800000; /* Theatre Red */
-    margin-bottom: 20px;
-    font-size: 24px;
+    color: var(--header-color);
+    margin-bottom: 25px;
+    font-size: 2.2em;
+    font-weight: 700;
 }
 
-textarea {
-    width: 90%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #CCC;
-    border-radius: 3px;
+textarea,
+input[type="file"] {
+    width: calc(100% - 20px); /* Учитываем padding */
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid var(--input-border);
+    border-radius: var(--border-radius-sm);
+    background-color: var(--input-bg);
+    color: var(--text-color);
     resize: vertical;
+    box-sizing: border-box; /* Важно для корректного расчета ширины */
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+textarea::placeholder {
+    color: var(--text-color);
+    opacity: 0.6;
 }
 
 input[type="file"] {
-    margin-bottom: 10px;
+    cursor: pointer;
 }
 
 button {
-    background-color: #800000; /* Theatre Red */
-    color: #FFF;
+    background-color: var(--button-bg);
+    color: white;
+    padding: 12px 25px;
     border: none;
-    padding: 10px 20px;
-    border-radius: 3px;
+    border-radius: var(--border-radius-sm);
     cursor: pointer;
-    margin: 5px;
-    font-size: 14px;
+    margin: 8px 5px;
+    font-size: 1.05em;
+    font-weight: 500;
+    transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 button:hover {
-    background-color: #A90308; /* Slightly lighter red */
+    background-color: var(--button-hover-bg);
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(0);
 }
 
 #message {
-    margin-top: 10px;
-    padding: 10px;
-    border-radius: 4px;
-    width: 90%;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: var(--border-radius-sm);
+    width: calc(100% - 30px); /* Учитываем padding */
     margin-left: auto;
     margin-right: auto;
+    text-align: left; /* Чтобы текст сообщения не центрировался */
+    box-sizing: border-box;
+    font-size: 0.95em;
 }
 
 .success {
-    background-color: #DFF2BF;
-    color: #4F8A10;
-    border: 1px solid #A5D6A7;
+    background-color: var(--success-bg);
+    color: var(--success-text);
+    border: 1px solid var(--success-border);
 }
 
 .error {
-    background-color: #FFBABA;
-    color: #D8000C;
-    border: 1px solid #EF9A9A;
+    background-color: var(--error-bg);
+    color: var(--error-text);
+    border: 1px solid var(--error-border);
 }
 
 .contact-info {
-    margin-top: 20px;
+    margin-top: 30px;
     text-align: center;
-    font-size: 12px;
-    color: #777;
+    font-size: 0.85em;
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+.contact-info h3 {
+    margin-bottom: 5px;
+    color: var(--header-color);
+}
+
+.contact-info p {
+    margin: 3px 0;
 }
 
 .contact-info a {
-    color: #800000; /* Theatre Red */
+    color: var(--link-color);
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 .contact-info a:hover {
     text-decoration: underline;
 }
 
-/* Dark Theme */
-body.dark-theme {
-    background-color: #333;
-    color: #EEE;
-}
-
-body.dark-theme .container {
-    background-color: #444;
-    border-color: #555;
-    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
-}
-
-body.dark-theme h1 {
-    color: #CD5C5C; /* Indian Red */
-}
-
-body.dark-theme textarea,
-body.dark-theme input {
-    background-color: #555;
-    color: #EEE;
-    border-color: #666;
-}
-
-body.dark-theme button {
-    background-color: #CD5C5C; /* Indian Red */
-}
-
-body.dark-theme button:hover {
-    background-color: #E57373;
-}
-
-body.dark-theme .contact-info {
-    color: #AAA;
-}
-
-/* Theme Toggle */
+/* Стили переключателя тем */
 .theme-toggle {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+    position: fixed; /* Изменено на fixed для лучшей доступности */
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
 }
 
 .theme-toggle button {
-    background-color: #CD5C5C; /* Indian Red */
-    color: #FFF;
-    padding: 5px 10px;
+    background-color: var(--toggle-button-bg);
+    color: white;
+    padding: 8px 15px;
     border: none;
-    border-radius: 3px;
+    border-radius: var(--border-radius-sm);
     cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .theme-toggle button:hover {
-    background-color: #E57373;
+    background-color: var(--toggle-button-hover-bg);
+    transform: translateY(-1px);
 }
