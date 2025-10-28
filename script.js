@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 })
+
 async function sendMessage() {
     const messageText = document.getElementById("messageText").value;
     const imageFile = document.getElementById("imageFile").files[0];
@@ -39,8 +40,22 @@ async function sendMessage() {
             messageDiv.className = "success";
             messageDiv.textContent = "Сообщение и изображение успешно отправлены!";
         } else {
+            let errorText = "Ошибка при отправке: " + response.statusText;
+
+            try {
+                const errorData = await response.json(); // Попытка распарсить JSON с информацией об ошибке
+                if (errorData.description) {
+                    errorText += " - " + errorData.description; // Добавляем описание ошибки из JSON
+                }
+                if (errorData.error_code) {
+                    errorText += " (Код ошибки: " + errorData.error_code + ")";
+                }
+            } catch (jsonError) {
+                errorText += " (Не удалось распарсить JSON с ошибкой)";
+            }
+
             messageDiv.className = "error";
-            messageDiv.textContent = "Ошибка при отправке: " + response.statusText;
+            messageDiv.textContent = errorText;
         }
 
     } catch (error) {
