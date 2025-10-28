@@ -1,146 +1,242 @@
-// Константа для ключа в localStorage
-const THEME_STORAGE_KEY = 'user-theme'; // 'light' или 'dark'
+ss
+/* Определяем переменные для светлой темы по умолчанию */
+:root {
+    --bg-color: #f8f8f8; /* Очень светлый серый */
+    --text-color: #333;
+    --container-bg: #fff;
+    --container-border: #e0e0e0;
+    --button-bg: #d32f2f; /* Красный */
+    --button-hover-bg: #b71c1c;
+    --header-bg: #d32f2f; /* Красный для шапки */
+    --header-color: #fff; /* Белый текст в шапке */
+    --input-bg: #fff;
+    --input-border: #ccc;
+    --link-color: #d32f2f;
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Инициализация темы при загрузке страницы
-    applyInitialTheme();
+    /* Цвета для сообщений */
+    --success-bg: #d4edda;
+    --success-text: #155724;
+    --success-border: #c3e6cb;
+    --error-bg: #f8d7da;
+    --error-text: #721c24;
+    --error-border: #f5c6cb;
 
-    const messageText = document.getElementById("messageText");
-    messageText.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter' && !event.shiftKey) { // Отправка по Enter, но Shift+Enter для новой строки
-            event.preventDefault();
-            sendMessage();
-        }
-    });
-});
+    /* Цвета для переключателя темы */
+    --toggle-button-bg: #6c757d; /* Серый */
+    --toggle-button-hover-bg: #5a6268;
 
-// Функция для применения темы (добавляет/удаляет класс 'dark-theme')
-function applyTheme(theme) {
-    const body = document.querySelector("body");
-    if (theme === 'dark') {
-        body.classList.add('dark-theme');
-    } else {
-        body.classList.remove('dark-theme');
-    }
-    // Сохраняем выбор пользователя в localStorage
-    localStorage.setItem(THEME_STORAGE_KEY, theme);
+    /* Общие стили */
+    --border-radius-sm: 6px;
+    --border-radius-md: 10px;
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-// Функция для определения предпочтительной темы
-function getPreferredTheme() {
-    // 1. Проверяем, есть ли выбор пользователя в localStorage
-    const storedTheme = localStorage.getItem(THEME_STORAGE_KEY);
-    if (storedTheme) {
-        return storedTheme;
-    }
+/* Переопределяем переменные для темной темы, если пользователь предпочитает темную схему */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #303030;
+        --text-color: #e0e0e0;
+        --container-bg: #424242;
+        --container-border: #555;
+        --button-bg: #f44336; /* Более светлый красный */
+        --button-hover-bg: #e53935;
+        --header-bg: #f44336; /* Более светлый красный для шапки */
+        --header-color: #fff;
+        --input-bg: #4d4d4d;
+        --input-border: #666;
+        --link-color: #f44336;
 
-    // 2. Если нет, проверяем системные предпочтения
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        return 'dark';
-    }
+        --success-bg: #386738;
+        --success-text: #c3e6cb;
+        --success-border: #218838;
+        --error-bg: #8c3838;
+        --error-text: #f5c6cb;
+        --error-border: #dc3545;
 
-    // 3. По умолчанию - светлая тема
-    return 'light';
-}
-
-// Функция для инициализации темы при загрузке
-function applyInitialTheme() {
-    applyTheme(getPreferredTheme());
-
-    // Отслеживаем изменения системных предпочтений, если пользователь еще не сделал явный выбор
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-        // Применяем системное предпочтение только если пользователь не сохранил свой выбор
-        if (!localStorage.getItem(THEME_STORAGE_KEY)) {
-            applyTheme(event.matches ? 'dark' : 'light');
-        }
-    });
-}
-
-// Функция для переключения темы вручную
-function toggleTheme() {
-    const body = document.querySelector("body");
-    const currentTheme = body.classList.contains('dark-theme') ? 'dark' : 'light';
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    applyTheme(newTheme);
-}
-
-// НОВАЯ ФУНКЦИЯ: Показать/скрыть канал Telegram
-function toggleChannelView() {
-    const channelWrapper = document.getElementById('telegram-channel-wrapper');
-    const toggleButton = document.getElementById('toggleChannelBtn');
-
-    if (channelWrapper.style.display === 'none' || channelWrapper.style.display === '') {
-        channelWrapper.style.display = 'block';
-        toggleButton.textContent = 'Скрыть канал';
-    } else {
-        channelWrapper.style.display = 'none';
-        toggleButton.textContent = 'Показать канал';
+        --toggle-button-bg: #adb5bd;
+        --toggle-button-hover-bg: #9ea7ae;
     }
 }
 
+/* Принудительная темная тема при наличии класса .dark-theme (для переключателя) */
+body.dark-theme {
+    --bg-color: #303030;
+    --text-color: #e0e0e0;
+    --container-bg: #424242;
+    --container-border: #555;
+    --button-bg: #f44336;
+    --button-hover-bg: #e53935;
+    --header-bg: #f44336;
+    --header-color: #fff;
+    --input-bg: #4d4d4d;
+    --input-border: #666;
+    --link-color: #f44336;
 
-async function sendMessage() {
-    const messageText = document.getElementById("messageText").value;
-    const imageFile = document.getElementById("imageFile").files[0];
-    const messageDiv = document.getElementById("message");
+    --success-bg: #386738;
+    --success-text: #c3e6cb;
+    --success-border: #218838;
+    --error-bg: #8c3838;
+    --error-text: #f5c6cb;
+    --error-border: #dc3545;
 
-    if (!messageText && !imageFile) {
-        messageDiv.className = "error";
-        messageDiv.textContent = "Пожалуйста, введите сообщение или выберите изображение.";
-        return;
-    }
+    --toggle-button-bg: #adb5bd;
+    --toggle-button-hover-bg: #9ea7ae;
+}
 
-    const formData = new FormData();
-    let apiUrl = `https://api.telegram.org/bot${getBotToken()}/`; // Базовый URL
-    let successMessage = "Сообщение успешно отправлено!";
+/* Общие стили */
+body {
+    font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
 
-    if (imageFile) {
-        formData.append("photo", imageFile);
-        if (messageText) {
-            formData.append("caption", messageText);
-        }
-        formData.append("chat_id", getChannelId());
-        apiUrl += "sendPhoto";
-        successMessage = "Изображение и сообщение успешно отправлены!";
-    } else {
-        formData.append("chat_id", getChannelId());
-        formData.append("text", messageText);
-        apiUrl += "sendMessage";
-    }
+header {
+    background-color: var(--header-bg);
+    color: var(--header-color);
+    text-align: center;
+    padding: 15px 0; /* Уменьшил отступ в шапке */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky; /* Фиксированная шапка */
+    top: 0;
+    z-index: 100;
+}
 
-    try {
-        const response = await fetch(apiUrl, {
-            method: "POST",
-            body: formData,
-        });
+header h1 {
+    margin: 0; /* Убрал отступы у заголовка в шапке */
+    font-size: 1.8em;
+}
 
-        if (response.ok) {
-            messageDiv.className = "success";
-            messageDiv.textContent = successMessage;
-            // Очистка полей после успешной отправки
-            document.getElementById("messageText").value = '';
-            document.getElementById("imageFile").value = ''; // Сброс выбранного файла
-        } else {
-            let errorText = "Ошибка при отправке: " + response.statusText;
+.container {
+    background-color: var(--container-bg);
+    border: 1px solid var(--container-border);
+    border-radius: var(--border-radius-md);
+    padding: 20px;
+    box-shadow: var(--box-shadow);
+    text-align: center;
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto; /* Центрирование контейнера и небольшой отступ сверху */
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
 
-            try {
-                const errorData = await response.json();
-                if (errorData.description) {
-                    errorText += " - " + errorData.description;
-                }
-                if (errorData.error_code) {
-                    errorText += " (Код ошибки: " + errorData.error_code + ")";
-                }
-            } catch (jsonError) {
-                errorText += " (Не удалось распарсить JSON с ошибкой)";
-            }
+textarea,
+input[type="file"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid var(--input-border);
+    border-radius: var(--border-radius-sm);
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    resize: vertical;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
 
-            messageDiv.className = "error";
-            messageDiv.textContent = errorText;
-        }
+textarea::placeholder {
+    color: var(--text-color);
+    opacity: 0.6;
+}
 
-    } catch (error) {
-        messageDiv.className = "error";
-        messageDiv.textContent = "Ошибка запроса: " + error;
-    }
+input[type="file"] {
+    cursor: pointer;
+}
+
+button {
+    background-color: var(--button-bg);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    margin: 5px;
+    font-size: 1em;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+button:hover {
+    background-color: var(--button-hover-bg);
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+#message {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: var(--border-radius-sm);
+    width: calc(100% - 24px);
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    box-sizing: border-box;
+    font-size: 0.9em;
+}
+
+.success {
+    background-color: var(--success-bg);
+    color: var(--success-text);
+    border: 1px solid var(--success-border);
+}
+
+.error {
+    background-color: var(--error-bg);
+    color: var(--error-text);
+    border: 1px solid var(--error-border);
+}
+
+.contact-info {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 0.8em;
+    color: var(--text-color);
+    opacity: 0.7;
+}
+
+.contact-info h3 {
+    margin-bottom: 5px;
+    color: var(--text-color);
+}
+
+.contact-info p {
+    margin: 3px 0;
+}
+
+.contact-info a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+/* Стили переключателя тем */
+.theme-toggle {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+}
+
+.theme-toggle button {
+    background-color: var(--toggle-button-bg);
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    font-size: 0.8em;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.theme-toggle button:hover {
+    background-color: var(--toggle-button-hover-bg);
+    transform: translateY(-1px);
 }
