@@ -3,29 +3,58 @@
 <head>
     <title>36OpenTalk</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <header>
-        <h1>36OpenTalk - beлкa 1.3.4</h1>
+        <div class="header-left">
+            <!-- лого -->
+            <img src="images/logo.png" alt="OpenTalk" class="header-logo">
+            <!-- версия -->
+            <span class="header-version">beлкa 1.6</span>
+        </div>
+        <div class="header-right">
+            <!-- контейнер для кнопок в шапке -->
+            <div class="header-buttons-container">
+                <!-- перейти в телегу -->
+                <button onclick="window.open('https://t.me/rodnaya36', '_blank')" class="header-telegram-button">
+                    Перейти в Telegram
+                </button>
+                <!-- переключить тему -->
+                <button onclick="toggleTheme()" class="theme-toggle-button">
+                    Переключить тему
+                </button>
+            </div>
+        </div>
     </header>
 
-    <div class="container">
-        <textarea id="messageText" rows="5" cols="50" placeholder="Введите ваше сообщение"></textarea><br>
-        <input type="file" id="imageFile" accept="image/*"><br>
-        <button onclick="sendMessage()">Отправить</button>
-        <button onclick="window.open('https://t.me/rodnaya36', '_blank')">Перейти в Telegram</button>
-        <div id="message"></div>
 
+    <div class="main-content-wrapper">
+        <!-- отправка -->
+        <div class="container">
+            <textarea id="messageText" rows="5" cols="50" placeholder="Введите ваше сообщение"></textarea><br>
+            <input type="file" id="imageFile" accept="image/*"><br>
+            <button onclick="sendMessage()">Отправить</button>
+            <div id="message"></div>
+        </div>
+
+        <!-- виджет -->
+        <div class="telegram-widget-container">
+            <div class='sk-ww-telegram-channel' data-embed-id='25616408'></div>
+            <script src='https://widgets.sociablekit.com/telegram-channel/widget.js' defer></script>
+        </div>
+    </div>
+
+    <footer>
         <div class="contact-info">
             <h3>Gromof</h3>
             <p><a href="https://t.me/StepanGromof" target="_blank">https://t.me/StepanGromof</a></p>
             <p>©Громов Степан 2024-2025</p>
         </div>
-    </div>
-
-    <div class="theme-toggle">
-        <button onclick="toggleTheme()">Переключить тему</button>
-    </div>
+    </footer>
 
     <script src="config.js"></script>
     <script src="script.js"></script>
